@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/models/category_item.dart';
 import 'package:food_delivery/models/food_item.dart';
+import 'package:food_delivery/pages/product_details_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -202,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                                 : Colors.white),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Column( 
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
@@ -246,65 +247,70 @@ class _HomePageState extends State<HomePage> {
                 itemCount: filteredFood.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0)),
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      Column(
-                        children: [
-                          Image.network(
-                            filteredFood[index].imgUrl,
-                            height: 100,
-                            width: 100,
-                          ),
-                          Text(
-                            filteredFood[index].name,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            filteredFood[index].category,
-                            style: const TextStyle(
-                              color: Colors.grey,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>  ProductDetailsPage(foodItem: filteredFood[index])));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.0)),
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Column(
+                          children: [
+                            Image.network(
+                              filteredFood[index].imgUrl,
+                              height: 100,
+                              width: 100,
                             ),
-                          ),
-                          Text(
-                            '\$ ${filteredFood[index].price}',
-                            style: const TextStyle(
+                            Text(
+                              filteredFood[index].name,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              filteredFood[index].category,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              '\$ ${filteredFood[index].price}',
+                              style: const TextStyle(
+                                  color: Colors.deepOrange,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        PositionedDirectional(
+                          top: 0,
+                          end: 0,
+                          child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  // filteredFood[index].isFavorit =
+                                  //     !filteredFood[index].isFavorit;
+                                  final selectedFoodItemIndex =
+                                      food.indexOf(filteredFood[index]);
+                                  filteredFood[index] = filteredFood[index]
+                                      .copywith(!filteredFood[index].isFavorit);
+                                  food[selectedFoodItemIndex] =
+                                      filteredFood[index];
+                                });
+                              },
+                              icon: Icon(
+                                filteredFood[index].isFavorit == false
+                                    ? Icons.favorite_border
+                                    : Icons.favorite,
                                 color: Colors.deepOrange,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      PositionedDirectional(
-                        top: 0,
-                        end: 0,
-                        child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                // filteredFood[index].isFavorit =
-                                //     !filteredFood[index].isFavorit;
-                                final selectedFoodItemIndex =
-                                    food.indexOf(filteredFood[index]);
-                                filteredFood[index] =
-                                    filteredFood[index].copywith(
-                                        !filteredFood[index].isFavorit);
-                                food[selectedFoodItemIndex] =
-                                    filteredFood[index];
-                              });
-                            },
-                            icon: Icon(
-                              filteredFood[index].isFavorit == false
-                                  ? Icons.favorite_border
-                                  : Icons.favorite,
-                              color: Colors.deepOrange,
-                            )),
-                      )
-                    ],
+                              )),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
