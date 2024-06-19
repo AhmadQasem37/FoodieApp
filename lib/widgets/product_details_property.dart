@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class ProductDetailsProperty extends StatelessWidget {
   final String title;
   final String value;
-  const ProductDetailsProperty({super.key,required this.title,required this.value});
+  const ProductDetailsProperty(
+      {super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
