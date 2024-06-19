@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/pages/custom_bottom_navbar.dart';
 import 'package:food_delivery/pages/forget_password_page.dart';
-import 'package:food_delivery/pages/home_page.dart';
 import 'package:food_delivery/pages/intro_screen.dart';
 import 'package:food_delivery/pages/login.dart';
 
-// FireBase Pakeges
+// FireBase Packages
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
