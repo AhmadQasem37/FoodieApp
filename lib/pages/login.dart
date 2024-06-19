@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/auth_users.dart';
 import 'package:food_delivery/widgets/MainButton.dart';
 
 enum AuthType1 { login, signup }
@@ -14,9 +15,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _email = "";
-  final _fullName = "";
-  final _password = "";
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
+  AuthBase authBase = AuthBase();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (widget.authType != AuthType1.login)
                       TextFormField(
                         key: const ValueKey("nameField"),
+                        controller: _fullNameController,
                         validator: (value) {
                           if (value!.isEmpty || value == "") {
                             return "Enter a valid name";
@@ -107,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextFormField(
                       key: const ValueKey("emailField"),
+                      controller: _emailController,
                       validator: (value) {
                         if (value!.isEmpty || !value.contains('@')) {
                           return "Enter a valid Email";
@@ -138,6 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextFormField(
                       key: const ValueKey("passwordField"),
+                      controller: _passwordController,
                       textAlign: TextAlign.justify,
                       validator: (value) {
                         if (value!.isEmpty || value.length < 6) {
@@ -183,9 +189,17 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     MainButton(
                       widget.authType == AuthType1.login ? "Log In" : "Sign Up ",
-                          () {
+                          () async{
                         if (_formKey.currentState!.validate()) {
-                          // Perform login or signup
+                          if (widget.authType == AuthType1.login)
+                            {
+                              await authBase.logIn(_emailController.text, _passwordController.text);
+                              Navigator.of(context).pushNamed("IntroScreen");
+                            }
+                          else
+                            {
+                              await authBase.signUp(_fullNameController.text, _emailController.text, _passwordController.text);
+                            }
                         }
                       },
                     ),
