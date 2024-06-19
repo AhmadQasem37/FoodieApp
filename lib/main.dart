@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/pages/custom_bottom_navbar.dart';
+import 'package:food_delivery/pages/forget_password_page.dart';
+import 'package:food_delivery/pages/home_page.dart';
 import 'package:food_delivery/pages/intro_screen.dart';
 import 'package:food_delivery/pages/login.dart';
 
@@ -55,6 +58,8 @@ class MyApp extends StatelessWidget {
         "IntroScreen":(BuildContext ctx)=> const IntroScreen(),
         "LoginScreen": (BuildContext ctx)=> const  LoginPage(AuthType1.login),
         "SignUpScreen": (BuildContext ctx) => const LoginPage(AuthType1.signup),
+        "Home" : (BuildContext ctx) => const CustomBottomNavbar(),
+        "ForgetPassword" : (BuildContext ctx) => const ForgetPassword(),
       }
     );
   }

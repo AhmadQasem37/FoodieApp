@@ -142,6 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     TextFormField(
+                      obscureText: true,
                       key: const ValueKey("passwordField"),
                       controller: _passwordController,
                       textAlign: TextAlign.justify,
@@ -167,7 +168,9 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.centerRight,
                         width: MediaQuery.of(context).size.width,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushNamed("ForgetPassword");
+                          },
                           child: const Text(
                             "Forget Password?",
                             style: TextStyle(
@@ -193,12 +196,12 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState!.validate()) {
                           if (widget.authType == AuthType1.login)
                             {
-                              await authBase.logIn(_emailController.text, _passwordController.text);
-                              Navigator.of(context).pushNamed("IntroScreen");
+                              await authBase.logIn(context, _emailController.text, _passwordController.text);
+                              // Navigator.of(context).pushNamed("Home");
                             }
                           else
                             {
-                              await authBase.signUp(_fullNameController.text, _emailController.text, _passwordController.text);
+                              await authBase.signUp(context, _fullNameController.text, _emailController.text, _passwordController.text);
                             }
                         }
                       },
