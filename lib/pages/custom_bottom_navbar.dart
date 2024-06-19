@@ -18,9 +18,9 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
     });
   }
 
-  List<Widget> widgetBuilder = const [
-    HomePage(),
-    FavoritesPage(),
+  List<Widget> widgetBuilder =  [
+   const HomePage(),
+    const FavoritesPage(),
     ProfilePage(),
   ];
   @override
