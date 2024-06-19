@@ -3,7 +3,8 @@ import 'package:food_delivery/models/food_item.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final FoodItem foodItem;
-  const ProductDetailsPage({super.key, required this.foodItem});
+  const ProductDetailsPage(
+      {super.key, required this.foodItem}); // constructor injection
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,9 @@ class ProductDetailsPage extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 16.0,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -66,6 +70,36 @@ class ProductDetailsPage extends StatelessWidget {
                         ),
                       )
                     ],
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'size',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            'Meduim',
+                            style: const TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.w800),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Text(
+                    foodItem.price.toString(),
+                    style: const TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black54),
                   ),
                 ],
               ),
