@@ -238,7 +238,9 @@ class _LoginPageState extends State<LoginPage> {
                     width: 20,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async{
+                      await authBase.signInWithGoogle();
+                    },
                     child: SizedBox(
                       width: 40,
                       height: 40,
