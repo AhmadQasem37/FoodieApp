@@ -3,7 +3,7 @@ import 'package:food_delivery/models/food_item.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final FoodItem foodItem;
-  const ProductDetailsPage({super.key, required this.foodItem});
+  const ProductDetailsPage({super.key, required this.foodItem});// constructor injection 
 
   @override
   Widget build(BuildContext context) {
