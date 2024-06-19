@@ -1,52 +1,140 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/models/food_item.dart';
+import 'package:food_delivery/widgets/product_details_property.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final FoodItem foodItem;
-  const ProductDetailsPage(
-      {super.key, required this.foodItem}); // constructor injection
+  const ProductDetailsPage({super.key, required this.foodItem});
+  @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
 
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  int quantity = 1;
+  void _decreaseQuantity() {
+    setState(() {
+      quantity--;
+    });
+  }
+
+  void _increaseQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  // constructor injection
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text('product details '),
+        backgroundColor: Colors.grey[100],
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.favorite_border)),
+          const SizedBox(
+            width: 8.0,
+          )
+        ],
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(color: Colors.grey[100]),
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Image.network(
-                  foodItem.imgUrl,
-                  width: double.infinity,
-                  height: 250,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 16.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(color: Colors.grey[100]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Image.network(
+                          widget.foodItem.imgUrl,
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 32.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
                         children: [
-                          Text(
-                            foodItem.name,
-                            style: const TextStyle(
-                                fontSize: 24.0, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.foodItem.name,
+                                    style: const TextStyle(
+                                        fontSize: 24.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    widget.foodItem.category,
+                                    style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black54),
+                                  ),
+                                ],
+                              ),
+                              DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(24.0)),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: quantity > 1
+                                            ? _decreaseQuantity
+                                            : null,
+                                        icon: const Icon(Icons.remove)),
+                                    Text(quantity.toString()),
+                                    IconButton(
+                                        onPressed: _increaseQuantity,
+                                        icon: const Icon(Icons.add))
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ProductDetailsProperty(
+                                  title: 'Size', value: 'Meduim'),
+                              const SizedBox(
+                                  height: 40.0, child: VerticalDivider()),
+                              ProductDetailsProperty(
+                                  title: 'Calories', value: '640 kcal'),
+                              const SizedBox(
+                                  height: 40.0, child: VerticalDivider()),
+                              ProductDetailsProperty(
+                                  title: 'Cooking', value: '5-10 Mins'),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          const Text(
+                            'Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom Lorem Ipsom',
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black45),
                           ),
                           Text(
-                            foodItem.category,
+                            widget.foodItem.price.toString(),
                             style: const TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w400,
@@ -54,56 +142,48 @@ class ProductDetailsPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(24.0)),
-                        child: Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.remove)),
-                            Text('1'),
-                            IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.add))
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'size',
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            'Meduim',
-                            style: const TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.w800),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  Text(
-                    foodItem.price.toString(),
-                    style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black54),
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      '\$ ${(widget.foodItem.price * quantity).toStringAsFixed(2)}',
+                      style: const TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          backgroundColor: Colors.deepOrange,
+                          foregroundColor: Colors.white),
+                      child: const Text(
+                        'Checkout',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

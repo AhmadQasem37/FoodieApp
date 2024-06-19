@@ -1,1 +1,0 @@
- /Users/ahmadqasem/ahmad/food_delivery/FoodieApp/.dart_tool/flutter_build/5b0098400d344546b69c742c7069e509/native_assets.yaml: 
