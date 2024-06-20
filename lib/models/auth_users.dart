@@ -4,17 +4,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 
-class User {
-  final String uid;
-
-  User(this.uid);
-}
-
 class AuthBase {
 
 final _auth = FirebaseAuth.instance;
 
-  Future <void> signUp (BuildContext context, String fullName, String email, String password ) async{
+
+bool isUserLoggedIn(){
+  return _auth.currentUser != null;
+}
+
+
+Future <void> signUp (BuildContext context, String fullName, String email, String password ) async{
 
     try {
         UserCredential userCredential = await FirebaseAuth
