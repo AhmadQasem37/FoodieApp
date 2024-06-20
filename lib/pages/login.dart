@@ -227,7 +227,10 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: ()async {
+                      await authBase.signInWithFacebook();
+
+                    },
                     icon: const Icon(
                       Icons.facebook,
                       color: Colors.blue,
