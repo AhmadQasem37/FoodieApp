@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _fullNameController = TextEditingController();
+
   AuthBase authBase = AuthBase();
 
   @override
