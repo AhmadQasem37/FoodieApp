@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/FireStore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
@@ -7,7 +8,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 class AuthBase {
 
 final _auth = FirebaseAuth.instance;
-
+FireStoreSend _fireStoreSend = FireStoreSend();
 
 bool isUserLoggedIn(){
   return _auth.currentUser != null;
@@ -25,6 +26,8 @@ Future <void> signUp (BuildContext context, String fullName, String email, Strin
         );
 
         await userCredential.user!.sendEmailVerification();
+
+        await _fireStoreSend.storeUser(fullName, email);
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.orange,
@@ -122,6 +125,18 @@ Future <void> signUp (BuildContext context, String fullName, String email, Strin
           backgroundColor: Colors.orange,
           content: Text(
             "No User Found",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.white,
+            ),
+          ),
+        ));
+      }
+      else if(e.code == "wrong-password"){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.orange,
+          content: Text(
+            "Wrong Password",
             style: TextStyle(
               fontSize: 15,
               color: Colors.white,

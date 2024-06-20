@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
 
             )
         ),
-        home: isFiresTimeOpen ? const Onbording() : const SplashScreen(),
+        home: !isFiresTimeOpen ?  const SplashScreen(): const Onbording(),
         routes:<String, WidgetBuilder>{
           "IntroScreen":(BuildContext ctx)=> const IntroScreen(),
           "LoginScreen": (BuildContext ctx)=> const  LoginPage(AuthType1.login),
