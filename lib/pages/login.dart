@@ -29,11 +29,11 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               widget.authType == AuthType1.login
                   ? const SizedBox(
-                height: 120,
-              )
+                      height: 120,
+                    )
                   : const SizedBox(
-                height: 80,
-              ),
+                      height: 80,
+                    ),
               Image.asset(
                 "assets/images/logo3.png",
                 scale: 1.9,
@@ -47,23 +47,23 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     widget.authType != AuthType1.login
                         ? const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.person_outline,
-                            weight: 600,
-                          ),
-                          Text(
-                            "Your Full Name",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            padding: EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person_outline,
+                                  weight: 600,
+                                ),
+                                Text(
+                                  "Your Full Name",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
                           )
-                        ],
-                      ),
-                    )
                         : const SizedBox(
-                      height: 0,
-                    ),
+                            height: 0,
+                          ),
                     if (widget.authType != AuthType1.login)
                       TextFormField(
                         key: const ValueKey("nameField"),
@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         decoration: InputDecoration(
                           contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 30),
+                              const EdgeInsets.symmetric(horizontal: 30),
                           hintText: "Enter your name",
                           fillColor: const Color.fromARGB(50, 50, 50, 1),
                           enabledBorder: OutlineInputBorder(
@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       decoration: InputDecoration(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 30),
+                            const EdgeInsets.symmetric(horizontal: 30),
                         hintText: "example@gmail.com",
                         fillColor: const Color.fromARGB(50, 50, 50, 1),
                         enabledBorder: OutlineInputBorder(
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       decoration: InputDecoration(
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 30),
+                            const EdgeInsets.symmetric(horizontal: 30),
                         hintText: "* * * * * * * *",
                         fillColor: const Color.fromARGB(50, 50, 50, 1),
                         enabledBorder: OutlineInputBorder(
@@ -177,13 +177,14 @@ class _LoginPageState extends State<LoginPage> {
                         child: const Text(
                           "Create an Account",
                           style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
+                              color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                       ),
                     MainButton(
-                      widget.authType == AuthType1.login ? "Log In" : "Sign Up ",
-                          () {
+                      widget.authType == AuthType1.login
+                          ? "Log In"
+                          : "Sign Up ",
+                      () {
                         if (_formKey.currentState!.validate()) {
                           // Perform login or signup
                         }
@@ -257,7 +258,9 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                     child: Text(
-                      widget.authType == AuthType1.login ? "Sign Up" : "Sign In",
+                      widget.authType == AuthType1.login
+                          ? "Sign Up"
+                          : "Sign In",
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),
