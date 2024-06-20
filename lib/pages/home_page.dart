@@ -250,7 +250,8 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>  ProductDetailsPage(foodItem: filteredFood[index])));
+                        builder: (context) =>
+                            ProductDetailsPage(foodItem: filteredFood[index])));
                   },
                   child: Container(
                     decoration: BoxDecoration(
