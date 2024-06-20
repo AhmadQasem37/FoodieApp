@@ -1,0 +1,23 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.idea/
+.vscode/
+build/
+pubspec.lock
+
+# Generated plugin registrant file
+GeneratedPluginRegistrant.*
+
+# Miscellaneous
+*.class
+*.lock
+*.log
+*.sql
+*.sqlite
+*.swp
+.DS_Store
+.gradle/
