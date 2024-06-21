@@ -188,10 +188,10 @@ class _HomePageState extends State<HomePage> {
                         });
                         if (selectedCategoryIndex != null) {
                           final selectedCategory =
-                              categories[selectedCategoryIndex!];
+                          categories[selectedCategoryIndex!];
                           filteredFood = food
                               .where((element) =>
-                                  element.category == selectedCategory.name)
+                          element.category == selectedCategory.name)
                               .toList();
                         }
                       },
@@ -250,7 +250,8 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>  ProductDetailsPage(foodItem: filteredFood[index])));
+                        builder: (context) =>
+                            ProductDetailsPage(foodItem: filteredFood[index])));
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -295,11 +296,11 @@ class _HomePageState extends State<HomePage> {
                                   // filteredFood[index].isFavorit =
                                   //     !filteredFood[index].isFavorit;
                                   final selectedFoodItemIndex =
-                                      food.indexOf(filteredFood[index]);
+                                  food.indexOf(filteredFood[index]);
                                   filteredFood[index] = filteredFood[index]
                                       .copywith(!filteredFood[index].isFavorit);
                                   food[selectedFoodItemIndex] =
-                                      filteredFood[index];
+                                  filteredFood[index];
                                 });
                               },
                               icon: Icon(
