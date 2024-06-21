@@ -27,12 +27,15 @@ Future <void> signUp (BuildContext context, String fullName, String email, Strin
 
         await userCredential.user!.sendEmailVerification();
 
-        await _fireStoreSend.storeUser(fullName, email);
+        await _fireStoreSend.storeUser(fullName, email , userCredential);
+        // print("===============================================");
+        // print(userCredential.toString());
+        // print("===============================================");
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.orange,
-          content: Text(
-            "Verification Email Has Been Sent to Your Email",
+          content:  Text(
+            "Verification Email Has Been Sent to Your Email ",
             style: TextStyle(
               fontSize: 15,
               color: Colors.white,

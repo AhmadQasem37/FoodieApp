@@ -1,15 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FireStoreSend {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future <void> storeUser(String fullName, String email) async{
-    await firestore.collection("Users").add({
+
+  Future <void> storeUser(String fullName, String email , UserCredential userCredential) async{
+    // print("Came To Store the User with the id :  ");
+    // print(userCredential.user?.uid.toString());
+    // print("=====================================================================================");
+
+    await firestore.collection("Users").doc(userCredential.user?.uid.toString()).set({
+      "uid" : userCredential.user?.uid,
       'full_name': fullName,
       'email' : email,
-    }).catchError(()=> print("Faild to add user"));
+      "imgURL" : "https://cdn.sanity.io/images/e3a07iip/production/58efab3fcd310ee26c62f8df400b0048881bba3b-1083x1083.png",
+    }).catchError((error)=> print(error));
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userID', userCredential.user!.uid);
+  }
+
+  Future <void> UpdateImage (String imgURL , String uid)async{
+
+    await firestore.collection("Users").doc(uid).update({
+      "imgURL" : imgURL
+    });
   }
 
 }

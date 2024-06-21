@@ -204,6 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                           else
                             {
                               await authBase.signUp(context, _fullNameController.text, _emailController.text, _passwordController.text);
+                              Navigator.of(context).pushReplacementNamed("LoginScreen");
                             }
                         }
                       },
