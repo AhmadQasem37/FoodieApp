@@ -93,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   child: _isLoading
-                      ? Center(
+                      ? const Center(
                     child: SpinKitFadingCube(color: Colors.white, size: 50.0),
                   )
                       : Column(
@@ -159,7 +159,9 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  ProfileButton(icon: Icons.layers_outlined, onPressed: () {}, text: "Your Orders"),
+                  ProfileButton(icon: Icons.layers_outlined, onPressed: () {
+                    Navigator.pushNamed(context, "OrdersScreen");
+                  }, text: "Your Orders"),
                   ProfileButton(icon: Icons.notifications_none_sharp, onPressed: () {}, text: "Notifications"),
                   ProfileButton(icon: Icons.discount_outlined, onPressed: () {}, text: "Coupons"),
                   ProfileButton(icon: Icons.payments_outlined, onPressed: () {}, text: "Payment Method"),
