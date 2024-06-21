@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:food_delivery/models/FireStore.dart';
+import 'package:food_delivery/models/auth_users.dart';
 import 'package:food_delivery/widgets/PrifleButtons.dart';
 import 'dart:ui';
 
@@ -13,9 +16,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  AuthBase _authBase = AuthBase();
+  FireStoreSend fireStoreSend = FireStoreSend();
   List<dynamic> _avatarsList = [];
   String _imgUrl = "https://cdn.sanity.io/images/e3a07iip/production/58efab3fcd310ee26c62f8df400b0048881bba3b-1083x1083.png";
-  Map<String, dynamic> userData = {};
+  Map<String, dynamic>? userData;
+  bool _isLoading = true;
 
   void _getAvatars() async {
     String avatarsString = await DefaultAssetBundle.of(context).loadString("assets/Avatars.json");
@@ -29,11 +35,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID').toString();
+    String userID = prefs.getString('userID') ?? '';
     DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection("Users").doc(userID).get();
     setState(() {
-      userData = userDoc.data() as Map<String, dynamic>;
-      _imgUrl = userData["imgURL"];
+      userData = userDoc.data() as Map<String, dynamic>?;
+      _imgUrl = userData?["imgURL"] ?? _imgUrl;
+      _isLoading = false;
     });
   }
 
@@ -55,20 +62,13 @@ class _ProfilePageState extends State<ProfilePage> {
           onAvatarSelected: (String selectedAvatarUrl) {
             setState(() {
               _imgUrl = selectedAvatarUrl;
-              // Assuming you have a method to update the image in Firestore
-              _updateUserImage(_imgUrl);
+              fireStoreSend.UpdateImage(_imgUrl, userData?["uid"] ?? '');
             });
             Navigator.pop(context);
           },
         );
       },
     );
-  }
-
-  Future<void> _updateUserImage(String newImgUrl) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID').toString();
-    await FirebaseFirestore.instance.collection("Users").doc(userID).update({"imgURL": newImgUrl});
   }
 
   @override
@@ -92,7 +92,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       bottomRight: Radius.circular(width),
                     ),
                   ),
-                  child: Column(
+                  child: _isLoading
+                      ? Center(
+                    child: SpinKitFadingCube(color: Colors.white, size: 50.0),
+                  )
+                      : Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Stack(
@@ -123,12 +127,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         width: width * 0.8,
                         child: Text(
-                          userData["full_name"] ?? '',
+                          userData?["full_name"] ?? '',
                           style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -136,12 +139,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: SizedBox(
                           width: width / 2,
                           child: Text(
-                            userData["email"] ?? '',
+                            userData?["email"] ?? '',
                             style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -170,8 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 15),
             TextButton(
               onPressed: () {
-                // Assuming you have an AuthBase instance for signing out
-                // AuthBase().signOut();
+                _authBase.signOut();
                 Navigator.of(context).pushReplacementNamed("LoginScreen");
               },
               child: const Text(
