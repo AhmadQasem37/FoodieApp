@@ -11,9 +11,13 @@ import 'package:food_delivery/pages/login.dart';
 // FireBase Packages
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:food_delivery/pages/notifications_page.dart';
 import 'package:food_delivery/pages/onbording.dart';
+import 'package:food_delivery/pages/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
+
+final navigationKey = GlobalKey<NavigatorState>();
 
 void main() async{
 
@@ -82,6 +86,7 @@ class _MyAppState extends State<MyApp> {
             )
         ),
         home: !isFiresTimeOpen ?  const SplashScreen(): const Onbording(),
+        navigatorKey: navigationKey,
         routes:<String, WidgetBuilder>{
           "IntroScreen":(BuildContext ctx)=> const IntroScreen(),
           "LoginScreen": (BuildContext ctx)=> const  LoginPage(AuthType1.login),
@@ -89,6 +94,8 @@ class _MyAppState extends State<MyApp> {
           "Home" : (BuildContext ctx) => const CustomBottomNavbar(),
           "ForgetPassword" : (BuildContext ctx) => const ForgetPassword(),
           "OrdersScreen" : (BuildContext ctx) => const AllOrders(),
+          "/NotificationPage" : (context) =>   NotificationsPage(),
+          "ProfilePage" : (BuildContext ctx) =>  ProfilePage(),
         }
     );
   }
