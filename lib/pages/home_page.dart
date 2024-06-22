@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     debugPrint('i am in the build now!');
-    // List<Map<String, dynamic>> products = [
+    final size =
+        MediaQuery.of(context).size; // List<Map<String, dynamic>> products = [
     //   {
     //     'name': 'Beef Burger',
     //     'category': 'Burger',
@@ -144,7 +145,8 @@ class _HomePageState extends State<HomePage> {
                 child: Image.network(
                   'https://img.freepik.com/free-psd/delicious-burger-food-menu-facebook-cover-template_106176-756.jpg',
                   fit: BoxFit.fill,
-                  height: 200,
+                  height:
+                      size.width > 800 ? size.height * 45 : size.height * 0.25,
                 ),
               ),
               const SizedBox(
@@ -169,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                 height: 32.0,
               ),
               SizedBox(
-                height: 120,
+                height: size.height * 0.15,
                 child: ListView.builder(
                   itemCount: categories.length,
                   scrollDirection: Axis.horizontal,
@@ -188,10 +190,10 @@ class _HomePageState extends State<HomePage> {
                         });
                         if (selectedCategoryIndex != null) {
                           final selectedCategory =
-                          categories[selectedCategoryIndex!];
+                              categories[selectedCategoryIndex!];
                           filteredFood = food
                               .where((element) =>
-                          element.category == selectedCategory.name)
+                                  element.category == selectedCategory.name)
                               .toList();
                         }
                       },
@@ -240,8 +242,8 @@ class _HomePageState extends State<HomePage> {
               //   padding: const EdgeInsetsDirectional.all(8.0),
               //   child:
               GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: size.width > 800 ? 4 : 2,
                     mainAxisSpacing: 18,
                     crossAxisSpacing: 18),
                 itemCount: filteredFood.length,
@@ -296,11 +298,11 @@ class _HomePageState extends State<HomePage> {
                                   // filteredFood[index].isFavorit =
                                   //     !filteredFood[index].isFavorit;
                                   final selectedFoodItemIndex =
-                                  food.indexOf(filteredFood[index]);
+                                      food.indexOf(filteredFood[index]);
                                   filteredFood[index] = filteredFood[index]
                                       .copywith(!filteredFood[index].isFavorit);
                                   food[selectedFoodItemIndex] =
-                                  filteredFood[index];
+                                      filteredFood[index];
                                 });
                               },
                               icon: Icon(
