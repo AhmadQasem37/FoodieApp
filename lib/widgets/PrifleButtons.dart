@@ -24,7 +24,9 @@ class _ProfileButtonState extends State<ProfileButton> {
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Icon(widget.icon),
           SizedBox(width: 8), // Adjust spacing between icon and text as needed
           Column(
@@ -40,16 +42,15 @@ class _ProfileButtonState extends State<ProfileButton> {
                     style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                      color: Colors.black
-                    ),
-
+                        color: Colors.black),
                   ),
                 ),
               ),
               Container(
                 height: 1,
                 color: Colors.grey[400], // Change color as per your design
-                width: MediaQuery.of(context).size.width * 0.9 - 10 , // Adjust width of line as needed
+                width: MediaQuery.of(context).size.width * 0.9 -
+                    10, // Adjust width of line as needed
               ),
             ],
           )
