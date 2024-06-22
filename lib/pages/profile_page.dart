@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,12 +12,14 @@ import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  AuthBase _authBase = AuthBase();
+  final AuthBase _authBase = AuthBase();
   FireStoreSend fireStoreSend = FireStoreSend();
   List<dynamic> _avatarsList = [];
   String _imgUrl = "https://cdn.sanity.io/images/e3a07iip/production/58efab3fcd310ee26c62f8df400b0048881bba3b-1083x1083.png";
@@ -36,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID') ?? '';
+
     DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection("Users").doc(userID).get();
     setState(() {
       userData = userDoc.data() as Map<String, dynamic>?;
@@ -43,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
       _isLoading = false;
     });
   }
+
 
   @override
   void initState() {
@@ -71,11 +76,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -162,7 +167,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   ProfileButton(icon: Icons.layers_outlined, onPressed: () {
                     Navigator.pushNamed(context, "OrdersScreen");
                   }, text: "Your Orders"),
-                  ProfileButton(icon: Icons.notifications_none_sharp, onPressed: () {}, text: "Notifications"),
+                  ProfileButton(icon: Icons.notifications_none_sharp, onPressed: ()async {
+                    SharedPreferences pref = await SharedPreferences.getInstance();
+                    await pref.setBool("fromProfile", true);
+                    Navigator.pushNamed(context, "/NotificationPage", arguments:const RemoteMessage());
+                  }, text: "Notifications"),
                   ProfileButton(icon: Icons.discount_outlined, onPressed: () {}, text: "Coupons"),
                   ProfileButton(icon: Icons.payments_outlined, onPressed: () {}, text: "Payment Method"),
                   ProfileButton(icon: Icons.help_outline_outlined, onPressed: () {}, text: "Get Help"),
@@ -196,7 +205,7 @@ class AvatarSelectionSheet extends StatelessWidget {
   final List<dynamic> avatarsList;
   final Function(String) onAvatarSelected;
 
-  AvatarSelectionSheet({required this.avatarsList, required this.onAvatarSelected});
+  const AvatarSelectionSheet({super.key, required this.avatarsList, required this.onAvatarSelected});
 
   @override
   Widget build(BuildContext context) {
