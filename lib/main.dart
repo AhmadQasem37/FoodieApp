@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/FireBaseNotfications.dart';
+import 'package:food_delivery/pages/AllOrders.dart';
 import 'package:food_delivery/pages/SplashScreen.dart';
 import 'package:food_delivery/pages/custom_bottom_navbar.dart';
 import 'package:food_delivery/pages/forget_password_page.dart';
+import 'package:food_delivery/pages/home_page.dart';
 import 'package:food_delivery/pages/intro_screen.dart';
 import 'package:food_delivery/pages/login.dart';
 
@@ -22,6 +25,8 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FireBaseMsg().initNotifications();
 
   runApp(const MyApp());
 }
@@ -83,6 +88,7 @@ class _MyAppState extends State<MyApp> {
           "SignUpScreen": (BuildContext ctx) => const LoginPage(AuthType1.signup),
           "Home" : (BuildContext ctx) => const CustomBottomNavbar(),
           "ForgetPassword" : (BuildContext ctx) => const ForgetPassword(),
+          "OrdersScreen" : (BuildContext ctx) => const AllOrders(),
         }
     );
   }

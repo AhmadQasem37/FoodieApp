@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,5 +33,60 @@ class FireStoreSend {
     });
   }
 
-}
+  Future<void> addToCart(String imgURL, String itemName, int numberOfItems, double price) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uid = prefs.getString("userID") ?? '';
 
+    // Add item to Firestore
+    await FirebaseFirestore.instance.collection("Cart").doc(uid).collection("Orders").add({
+      "imgURL": imgURL,
+      "itemName": itemName,
+      "numberOfItems": numberOfItems,
+      "price": price,
+      "isDelivered" : false,
+    });
+
+    // Retrieve existing orders from shared preferences
+    List<String> orders = prefs.getStringList("Orders") ?? [];
+
+    // Create a new order as a JSON string
+    String newOrder = jsonEncode({
+      "imgURL": imgURL,
+      "itemName": itemName,
+      "numberOfItems": numberOfItems,
+      "price": price
+    });
+
+    // Add the new order to the list
+    orders.add(newOrder);
+
+    // Save the updated list back to shared preferences
+    await prefs.setStringList("Orders", orders);
+
+  }
+
+  // Update delivery status in Firestore and refresh orders list
+  Future<void> updateDeliveryStatus(String orderId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString("userID");
+
+    if (uid == null) {
+      // Handle case where userID is null, perhaps show an error or return early
+      return;
+    }
+
+    // Update Firestore document to mark order as delivered
+    await FirebaseFirestore.instance
+        .collection("Cart")
+        .doc(uid)
+        .collection("Orders")
+        .doc(orderId)
+        .update({
+      "isDelivered": true,
+    });
+
+    // // Refresh orders list after update
+    // getFromCart();
+  }
+
+}
