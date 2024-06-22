@@ -32,9 +32,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   // constructor injection
   @override
   Widget build(BuildContext context) {
-
-    double totalPrice= double.parse(widget.foodItem.price) * quantity;
-
+    double totalPrice = double.parse(widget.foodItem.price) * quantity;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -123,12 +122,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             children: [
                               ProductDetailsProperty(
                                   title: 'Size', value: 'Meduim'),
-                               SizedBox(
-                                  height: 40.0, child: VerticalDivider()),
+                              SizedBox(height: 40.0, child: VerticalDivider()),
                               ProductDetailsProperty(
                                   title: 'Calories', value: '640 kcal'),
-                               SizedBox(
-                                  height: 40.0, child: VerticalDivider()),
+                              SizedBox(height: 40.0, child: VerticalDivider()),
                               ProductDetailsProperty(
                                   title: 'Cooking', value: '5-10 Mins'),
                             ],
@@ -157,11 +154,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 8.0,
+            SizedBox(
+              height: size.width > 800 ? size.height * 0.08 : size.height * 0.1,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0,),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -177,21 +174,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   ),
                   Expanded(
                     flex: 3,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // _fireStoreSend.addToCart(widget.foodItem.imgUr, w);
-                        _fireStoreSend.addToCart(widget.foodItem.imgUrl, widget.foodItem.name, quantity, totalPrice);
-                        Navigator.of(context).pushReplacementNamed("Home");
-                      },
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          backgroundColor: Colors.deepOrange,
-                          foregroundColor: Colors.white),
-                      child: const Text(
-                        'Checkout',
-                        style: TextStyle(fontSize: 16.0),
+                    child: SizedBox(
+                      height: size.height *0.08,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // _fireStoreSend.addToCart(widget.foodItem.imgUr, w);
+                          _fireStoreSend.addToCart(widget.foodItem.imgUrl,
+                              widget.foodItem.name, quantity, totalPrice);
+                          Navigator.of(context).pushReplacementNamed("Home");
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            backgroundColor: Colors.deepOrange,
+                            foregroundColor: Colors.white),
+                        child: const Text(
+                          'Checkout',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
                       ),
                     ),
                   )
