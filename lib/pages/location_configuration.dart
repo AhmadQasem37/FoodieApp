@@ -3,7 +3,7 @@ import 'package:geocoding/geocoding.dart';
 
 class LocationConfiguration {
   static void getCurrentLocation(void Function(String) callback) async {
-    bool serviceEnabled;
+    bool serviceEnabled = false;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
