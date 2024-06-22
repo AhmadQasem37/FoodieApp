@@ -94,7 +94,9 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+
+                    },
                     child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Colors.white,
