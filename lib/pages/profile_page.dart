@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,12 +12,14 @@ import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  AuthBase _authBase = AuthBase();
+  final AuthBase _authBase = AuthBase();
   FireStoreSend fireStoreSend = FireStoreSend();
   List<dynamic> _avatarsList = [];
   String _imgUrl =
@@ -38,14 +41,17 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID') ?? '';
-    DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection("Users").doc(userID).get();
+
+
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection("Users").doc(userID).get();
+
     setState(() {
       userData = userDoc.data() as Map<String, dynamic>?;
       _imgUrl = userData?["imgURL"] ?? _imgUrl;
       _isLoading = false;
     });
   }
+
 
   @override
   void initState() {
@@ -74,11 +80,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -167,40 +173,23 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  ProfileButton(
-                      icon: Icons.layers_outlined,
-                      onPressed: () {
-                        Navigator.pushNamed(context, "OrdersScreen");
-                      },
-                      text: "Your Orders"),
-                  ProfileButton(
-                      icon: Icons.notifications_none_sharp,
-                      onPressed: () {},
-                      text: "Notifications"),
-                  ProfileButton(
-                      icon: Icons.discount_outlined,
-                      onPressed: () {},
-                      text: "Coupons"),
-                  ProfileButton(
-                      icon: Icons.payments_outlined,
-                      onPressed: () {},
-                      text: "Payment Method"),
-                  ProfileButton(
-                      icon: Icons.help_outline_outlined,
-                      onPressed: () {},
-                      text: "Get Help"),
-                  ProfileButton(
-                      icon: Icons.info_outline,
-                      onPressed: () {},
-                      text: "About"),
-                  ProfileButton(
-                      icon: Icons.logout_outlined,
-                      onPressed: () {
-                        _authBase.signOut();
-                        Navigator.of(context)
-                            .pushReplacementNamed("LoginScreen");
-                      },
-                      text: "Logout"),
+
+                  ProfileButton(icon: Icons.layers_outlined, onPressed: () {
+                    Navigator.pushNamed(context, "OrdersScreen");
+                  }, text: "Your Orders"),
+                  ProfileButton(icon: Icons.notifications_none_sharp, onPressed: ()async {
+                    SharedPreferences pref = await SharedPreferences.getInstance();
+                    await pref.setBool("fromProfile", true);
+                    Navigator.pushNamed(context, "/NotificationPage", arguments:const RemoteMessage());
+                  }, text: "Notifications"),
+                  ProfileButton(icon: Icons.discount_outlined, onPressed: () {}, text: "Coupons"),
+                  ProfileButton(icon: Icons.payments_outlined, onPressed: () {}, text: "Payment Method"),
+                  ProfileButton(icon: Icons.help_outline_outlined, onPressed: () {}, text: "Get Help"),
+                  ProfileButton(icon: Icons.info_outline, onPressed: () {}, text: "About"),
+                  ProfileButton(icon: Icons.logout_outlined, onPressed: () {
+                    _authBase.signOut();
+                    Navigator.of(context).pushReplacementNamed("LoginScreen");
+                  }, text: "Logout"),
                 ],
               ),
             ),
@@ -226,8 +215,9 @@ class AvatarSelectionSheet extends StatelessWidget {
   final List<dynamic> avatarsList;
   final Function(String) onAvatarSelected;
 
-  AvatarSelectionSheet(
-      {required this.avatarsList, required this.onAvatarSelected});
+
+  const AvatarSelectionSheet({super.key, required this.avatarsList, required this.onAvatarSelected});
+
 
   @override
   Widget build(BuildContext context) {
