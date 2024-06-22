@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:food_delivery/models/FireStore.dart';
 import 'package:food_delivery/models/food_item.dart';
@@ -154,10 +153,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
             ),
             SizedBox(
-              height: size.width > 800 ? size.height * 0.08 : size.height * 0.1,
+              height: size.width > 800 ? size.height * 0.08 : 8.0,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0,),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 24.0, vertical: size.width > 800 ? 24.0 : 0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -174,7 +174,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Expanded(
                     flex: 3,
                     child: SizedBox(
-                      height: size.height *0.08,
+                      height: size.height * 0.07,
                       child: ElevatedButton(
                         onPressed: () {
                           // _fireStoreSend.addToCart(widget.foodItem.imgUr, w);

@@ -15,8 +15,7 @@ import 'package:food_delivery/pages/onbording.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
-void main() async{
-
+void main() async {
   // This Line From  the youtube Video
   //https://youtu.be/ybgOIwf4dZU?si=I8u-Yx9a2J_7ypPC
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,6 @@ void main() async{
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -40,7 +38,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   bool isFiresTimeOpen = true;
 
   @override
@@ -55,7 +52,6 @@ class _MyAppState extends State<MyApp> {
     isFiresTimeOpen = isFirstTime;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -65,34 +61,29 @@ class _MyAppState extends State<MyApp> {
             useMaterial3: true,
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
-              fillColor:Colors.white,
+              fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              disabledBorder:  OutlineInputBorder(
+              disabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              focusedBorder:  OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-
-            )
-        ),
-        home: !isFiresTimeOpen ?  const SplashScreen(): const Onbording(),
-        routes:<String, WidgetBuilder>{
-          "IntroScreen":(BuildContext ctx)=> const IntroScreen(),
-          "LoginScreen": (BuildContext ctx)=> const  LoginPage(AuthType1.login),
-          "SignUpScreen": (BuildContext ctx) => const LoginPage(AuthType1.signup),
-          "Home" : (BuildContext ctx) => const CustomBottomNavbar(),
-          "ForgetPassword" : (BuildContext ctx) => const ForgetPassword(),
-          "OrdersScreen" : (BuildContext ctx) => const AllOrders(),
-        }
-    );
+            )),
+        home: !isFiresTimeOpen ? const SplashScreen() : const Onbording(),
+        routes: <String, WidgetBuilder>{
+          "IntroScreen": (BuildContext ctx) => const IntroScreen(),
+          "LoginScreen": (BuildContext ctx) => const LoginPage(AuthType1.login),
+          "SignUpScreen": (BuildContext ctx) =>
+              const LoginPage(AuthType1.signup),
+          "Home": (BuildContext ctx) => const CustomBottomNavbar(),
+          "ForgetPassword": (BuildContext ctx) => const ForgetPassword(),
+          "OrdersScreen": (BuildContext ctx) => const AllOrders(),
+        });
   }
 }
-
-
-
