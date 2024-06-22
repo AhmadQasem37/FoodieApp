@@ -245,79 +245,88 @@ class _HomePageState extends State<HomePage> {
               //   child:
               GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: size.width > 800 ? 4 : 2,
+                    crossAxisCount: size.width > 1100
+                        ? 5
+                        : size.width > 800
+                            ? 4
+                            : 2,
                     mainAxisSpacing: 18,
                     crossAxisSpacing: 18),
                 itemCount: filteredFood.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetailsPage(foodItem: filteredFood[index])));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.0)),
-                    child: Stack(
-                      alignment: AlignmentDirectional.center,
-                      children: [
-                        Column(
-                          children: [
-                            Image.network(
-                              filteredFood[index].imgUrl,
-                              height: 100,
-                              width: 100,
-                            ),
-                            Text(
-                              filteredFood[index].name,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              filteredFood[index].category,
-                              style: const TextStyle(
-                                color: Colors.grey,
+                itemBuilder: (context, index) =>
+                    LayoutBuilder(builder: (context, constrains) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProductDetailsPage(
+                              foodItem: filteredFood[index])));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.0)),
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Column(
+                            children: [
+                              Image.network(
+                                filteredFood[index].imgUrl,
+                                height: constrains.maxHeight * 0.45,
+                                width: 100,
                               ),
-                            ),
-                            Text(
-                              '\$ ${filteredFood[index].price}',
-                              style: const TextStyle(
+                              Text(
+                                filteredFood[index].name,
+                                style: TextStyle(
+                                    fontSize: constrains.maxHeight * 0.09,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                filteredFood[index].category,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                '\$ ${filteredFood[index].price}',
+                                style: TextStyle(
+                                    color: Colors.deepOrange,
+                                    fontSize: constrains.maxHeight * 0.09,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          PositionedDirectional(
+                            top: 0,
+                            end: 0,
+                            child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    // filteredFood[index].isFavorit =
+                                    //     !filteredFood[index].isFavorit;
+                                    final selectedFoodItemIndex =
+                                        food.indexOf(filteredFood[index]);
+                                    filteredFood[index] = filteredFood[index]
+                                        .copywith(
+                                            !filteredFood[index].isFavorit);
+                                    food[selectedFoodItemIndex] =
+                                        filteredFood[index];
+                                  });
+                                },
+                                icon: Icon(
+                                  filteredFood[index].isFavorit == false
+                                      ? Icons.favorite_border
+                                      : Icons.favorite,
                                   color: Colors.deepOrange,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                        PositionedDirectional(
-                          top: 0,
-                          end: 0,
-                          child: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  // filteredFood[index].isFavorit =
-                                  //     !filteredFood[index].isFavorit;
-                                  final selectedFoodItemIndex =
-                                      food.indexOf(filteredFood[index]);
-                                  filteredFood[index] = filteredFood[index]
-                                      .copywith(!filteredFood[index].isFavorit);
-                                  food[selectedFoodItemIndex] =
-                                      filteredFood[index];
-                                });
-                              },
-                              icon: Icon(
-                                filteredFood[index].isFavorit == false
-                                    ? Icons.favorite_border
-                                    : Icons.favorite,
-                                color: Colors.deepOrange,
-                              )),
-                        )
-                      ],
+                                )),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
               // GridView(
               //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
