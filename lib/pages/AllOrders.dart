@@ -13,7 +13,7 @@ class AllOrders extends StatefulWidget {
 
 class _AllOrdersState extends State<AllOrders> {
   int notDeliveredCount = 0;
-  int deliveredCount =0;
+  int deliveredCount = 0;
   List<Map<String, dynamic>> _orders = [];
   Future<void> getFromCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -36,7 +36,8 @@ class _AllOrdersState extends State<AllOrders> {
         "itemName": doc["itemName"],
         "numberOfItems": doc["numberOfItems"],
         "price": doc["price"],
-        "isDelivered": doc["isDelivered"] ?? false, // Default to false if isDelivered is null
+        "isDelivered": doc["isDelivered"] ??
+            false, // Default to false if isDelivered is null
       });
 
       orders.add(newOrder);
@@ -65,13 +66,11 @@ class _AllOrdersState extends State<AllOrders> {
     });
   }
 
-
   @override
   void initState() {
     super.initState();
     getFromCart();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -90,15 +89,17 @@ class _AllOrdersState extends State<AllOrders> {
               children: [
                 Row(
                   children: [
-                    const Text("Delivered: ", style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                    ),),
-                    Text(" $deliveredCount", style: const TextStyle(
-                        fontSize: 18,
-                      color: Colors.black
-                    ),)
+                    const Text(
+                      "Delivered: ",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      " $deliveredCount",
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                    )
                   ],
                 ),
                 const VerticalDivider(
@@ -110,15 +111,17 @@ class _AllOrdersState extends State<AllOrders> {
                 ),
                 Row(
                   children: [
-                    const Text("Not Delivered: ", style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600
-                    ),),
-                    Text(" $notDeliveredCount", style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black
-                    ),)
+                    const Text(
+                      "Not Delivered: ",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      " $notDeliveredCount",
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                    )
                   ],
                 ),
               ],
@@ -131,7 +134,8 @@ class _AllOrdersState extends State<AllOrders> {
                 final order = _orders[index];
                 return Container(
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+                    border:
+                        Border(bottom: BorderSide(color: Colors.grey[300]!)),
                   ),
                   child: ListTile(
                     title: Text(order['itemName'] ?? "Null Name"),
@@ -140,16 +144,20 @@ class _AllOrdersState extends State<AllOrders> {
                     leading: Image.network(order['imgURL'] ?? 'Null Image',
                         width: 50, height: 50, fit: BoxFit.cover),
                     trailing: order["isDelivered"] ?? false
-                        ? const Text("Delivered" , style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600
-                    ),)
-                        : const Text("Not Delivered",style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600
-                    ),),
+                        ? const Text(
+                            "Delivered",
+                            style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          )
+                        : const Text(
+                            "Not Delivered",
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ),
                   ),
                 );
               },
@@ -159,5 +167,4 @@ class _AllOrdersState extends State<AllOrders> {
       ),
     );
   }
-
 }

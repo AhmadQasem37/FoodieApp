@@ -17,10 +17,10 @@ import 'package:food_delivery/pages/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
+
 final navigationKey = GlobalKey<NavigatorState>();
 
-void main() async{
-
+void main() async {
   // This Line From  the youtube Video
   //https://youtu.be/ybgOIwf4dZU?si=I8u-Yx9a2J_7ypPC
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,6 @@ void main() async{
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -44,7 +43,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   bool isFiresTimeOpen = true;
 
   @override
@@ -59,7 +57,6 @@ class _MyAppState extends State<MyApp> {
     isFiresTimeOpen = isFirstTime;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,16 +66,16 @@ class _MyAppState extends State<MyApp> {
             useMaterial3: true,
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
-              fillColor:Colors.white,
+              fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              disabledBorder:  OutlineInputBorder(
+              disabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              focusedBorder:  OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -98,8 +95,6 @@ class _MyAppState extends State<MyApp> {
           "ProfilePage" : (BuildContext ctx) =>  ProfilePage(),
         }
     );
+
   }
 }
-
-
-

@@ -3,7 +3,6 @@ import 'package:food_delivery/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FireBaseMsg {
-
   final _fireBaseMessaging = FirebaseMessaging.instance;
 
   Future<void> initNotifications() async {
@@ -41,3 +40,6 @@ class FireBaseMsg {
   }
 
 }
+
+}
+
