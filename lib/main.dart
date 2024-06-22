@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/FireBaseNotfications.dart';
 import 'package:food_delivery/pages/AllOrders.dart';
 import 'package:food_delivery/pages/SplashScreen.dart';
 import 'package:food_delivery/pages/custom_bottom_navbar.dart';
@@ -23,6 +24,8 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FireBaseMsg().initNotifications();
 
   runApp(const MyApp());
 }

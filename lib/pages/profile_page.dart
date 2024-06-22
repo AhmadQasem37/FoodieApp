@@ -167,7 +167,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ProfileButton(icon: Icons.payments_outlined, onPressed: () {}, text: "Payment Method"),
                   ProfileButton(icon: Icons.help_outline_outlined, onPressed: () {}, text: "Get Help"),
                   ProfileButton(icon: Icons.info_outline, onPressed: () {}, text: "About"),
-                  ProfileButton(icon: Icons.logout_outlined, onPressed: () {}, text: "Logout"),
+                  ProfileButton(icon: Icons.logout_outlined, onPressed: () {
+                    _authBase.signOut();
+                    Navigator.of(context).pushReplacementNamed("LoginScreen");
+                  }, text: "Logout"),
                 ],
               ),
             ),
