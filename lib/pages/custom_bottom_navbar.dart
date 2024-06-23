@@ -34,7 +34,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.deepOrange,
         unselectedItemColor: Colors.black,
         items: const [
           BottomNavigationBarItem(

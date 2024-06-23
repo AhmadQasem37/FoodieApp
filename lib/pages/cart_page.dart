@@ -73,10 +73,6 @@ class _CartPageState extends State<CartPage> {
         title: Text('Your Cart'),
       ),
       body:
-      // isFirstTime
-      //     ?
-      //   SpinKitSpinningLines(color: Colors.orange)
-      //     :
         _orders.isEmpty
           ? const Center(child: Text('No items in your cart'))
           : ListView.builder(

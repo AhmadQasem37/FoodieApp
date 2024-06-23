@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: SpinKitSpinningLines(color: Colors.orange,),
+        child: SpinKitSpinningLines(color: Colors.deepOrange,),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_delivery/models/content_model.dart';
 import 'package:food_delivery/widgets/MainButton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Onbording extends StatefulWidget {
@@ -19,6 +20,14 @@ class _OnbordingState extends State<Onbording> {
   void initState() {
     _controller = PageController(initialPage: 0);
     super.initState();
+    _checkFirstTime();
+  }
+  Future<void> _checkFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+    if (isFirstTime) {
+      await prefs.setBool('isFirstTime', false);
+    }
   }
 
   @override
@@ -86,7 +95,7 @@ class _OnbordingState extends State<Onbording> {
                   currentIndex == contents.length - 1 ? "Continue" : "Next",
               () {
                 if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacementNamed(context, "IntroScreen");
+                  Navigator.pushReplacementNamed(context, "LoginScreen");
                 }
                 _controller.nextPage(
                   duration: const Duration(milliseconds: 100),
