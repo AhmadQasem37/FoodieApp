@@ -21,7 +21,6 @@ final navigationKey = GlobalKey<NavigatorState>();
 
 void main() async{
 
-
   // This Line From  the youtube Video
   //https://youtu.be/ybgOIwf4dZU?si=I8u-Yx9a2J_7ypPC
   WidgetsFlutterBinding.ensureInitialized();

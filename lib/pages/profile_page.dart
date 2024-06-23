@@ -172,6 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
+
                   ProfileButton(icon: Icons.layers_outlined, onPressed: () {
                     Navigator.pushNamed(context, "OrdersScreen");
                   }, text: "Your Orders"),
