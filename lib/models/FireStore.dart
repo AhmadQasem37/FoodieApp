@@ -15,6 +15,7 @@ class FireStoreSend {
     // print(userCredential.user?.uid.toString());
     // print("=====================================================================================");
 
+
     await firestore.collection("Users").doc(userCredential.user?.uid.toString()).set({
       "uid" : userCredential.user?.uid,
       'full_name': fullName,
@@ -46,24 +47,9 @@ class FireStoreSend {
       "isDelivered" : false,
     });
 
-    // Retrieve existing orders from shared preferences
-    List<String> orders = prefs.getStringList("Orders") ?? [];
-
-    // Create a new order as a JSON string
-    String newOrder = jsonEncode({
-      "imgURL": imgURL,
-      "itemName": itemName,
-      "numberOfItems": numberOfItems,
-      "price": price
-    });
-
-    // Add the new order to the list
-    orders.add(newOrder);
-
-    // Save the updated list back to shared preferences
-    await prefs.setStringList("Orders", orders);
-
   }
+
+
 
   // Update delivery status in Firestore and refresh orders list
   Future<void> updateDeliveryStatus(String orderId) async {

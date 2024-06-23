@@ -34,9 +34,7 @@ class FireBaseMsg {
   Future initPushNotifications() async {
     // handle notification if the app terminated and now opened
     FirebaseMessaging.instance.getInitialMessage().then(handelMsg);
-
     // attach event listeners for when a notification opens the app
-
     FirebaseMessaging.onMessageOpenedApp.listen((handelMsg));
   }
 
