@@ -69,42 +69,39 @@ class _CartPageState extends State<CartPage> {
         title: Text('Your Cart'),
       ),
       body:
-          // isFirstTime
-          //     ?
-          //   SpinKitSpinningLines(color: Colors.orange)
-          //     :
-          _orders.isEmpty
-              ? const Center(child: Text('No items in your cart'))
-              : ListView.builder(
-                  itemCount: _orders.length,
-                  itemBuilder: (context, index) {
-                    final order = _orders[index];
-                    return Dismissible(
-                      key: Key(order['id'] ?? "Null Key"),
-                      // Unique key for each order
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 20.0),
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                      ),
-                      confirmDismiss: (DismissDirection direction) async {
-                        return await showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Confirm'),
-                              content: const Text(
-                                  'Are you sure you want to mark this order as delivered?'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.of(context).pop(false),
-                                  child: const Text('CANCEL'),
+
+        _orders.isEmpty
+          ? const Center(child: Text('No items in your cart'))
+          : ListView.builder(
+        itemCount: _orders.length,
+        itemBuilder: (context, index) {
+          final order = _orders[index];
+          return Dismissible(
+            key: Key(order['id'] ?? "Null Key"),
+            // Unique key for each order
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20.0),
+              child: const Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+            ),
+            confirmDismiss: (DismissDirection direction) async {
+              return await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Confirm'),
+                    content: const Text(
+                        'Are you sure you want to mark this order as delivered?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.of(context).pop(false),
+                        child: const Text('CANCEL'),
                                 ),
                                 TextButton(
                                   onPressed: () =>
