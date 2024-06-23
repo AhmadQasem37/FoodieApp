@@ -4,6 +4,7 @@ import 'package:food_delivery/pages/AllOrders.dart';
 import 'package:food_delivery/pages/SplashScreen.dart';
 import 'package:food_delivery/pages/custom_bottom_navbar.dart';
 import 'package:food_delivery/pages/forget_password_page.dart';
+import 'package:food_delivery/pages/home_page.dart';
 import 'package:food_delivery/pages/intro_screen.dart';
 import 'package:food_delivery/pages/login.dart';
 
@@ -34,7 +35,6 @@ void main() async{
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -43,7 +43,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   bool isFiresTimeOpen = true;
 
   @override
@@ -58,7 +57,6 @@ class _MyAppState extends State<MyApp> {
     isFiresTimeOpen = isFirstTime;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,16 +66,16 @@ class _MyAppState extends State<MyApp> {
             useMaterial3: true,
             inputDecorationTheme: InputDecorationTheme(
               filled: true,
-              fillColor:Colors.white,
+              fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              disabledBorder:  OutlineInputBorder(
+              disabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-              focusedBorder:  OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -97,8 +95,6 @@ class _MyAppState extends State<MyApp> {
           "ProfilePage" : (BuildContext ctx) =>  ProfilePage(),
         }
     );
+
   }
 }
-
-
-

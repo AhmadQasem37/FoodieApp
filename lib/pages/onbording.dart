@@ -4,7 +4,6 @@ import 'package:food_delivery/models/content_model.dart';
 import 'package:food_delivery/widgets/MainButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Onbording extends StatefulWidget {
   const Onbording({super.key});
 
@@ -14,7 +13,7 @@ class Onbording extends StatefulWidget {
 
 class _OnbordingState extends State<Onbording> {
   int currentIndex = 0;
-   PageController _controller = PageController(initialPage: 0);
+  PageController _controller = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -64,13 +63,12 @@ class _OnbordingState extends State<Onbording> {
                         ),
                         Text(
                           contents[i].title,
-                          style:const TextStyle(
+                          style: const TextStyle(
                             fontSize: 35,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 20),
-
                       ],
                     ),
                   ),
@@ -92,7 +90,7 @@ class _OnbordingState extends State<Onbording> {
             margin: const EdgeInsets.all(40),
             width: double.infinity,
             child: MainButton(
-                  currentIndex == contents.length - 1 ? "Continue" : "Next",
+              currentIndex == contents.length - 1 ? "Continue" : "Next",
               () {
                 if (currentIndex == contents.length - 1) {
                   Navigator.pushReplacementNamed(context, "LoginScreen");
@@ -102,7 +100,6 @@ class _OnbordingState extends State<Onbording> {
                   curve: Curves.bounceIn,
                 );
               },
-
             ),
           )
         ],

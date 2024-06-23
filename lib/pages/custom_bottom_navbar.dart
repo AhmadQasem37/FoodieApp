@@ -19,19 +19,21 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
     });
   }
 
-  List<Widget> widgetBuilder =  [
-   const HomePage(),
+  List<Widget> widgetBuilder = [
+    const HomePage(),
     const FavoritesPage(),
-     CartPage(),
+    CartPage(),
     ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-
       backgroundColor: Colors.grey[100],
       body: widgetBuilder[selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
+
+      bottomNavigationBar: size.width > 800
+          ? null : BottomNavigationBar(
         currentIndex: selectedIndex,
         backgroundColor: Colors.white,
         selectedItemColor: Colors.deepOrange,

@@ -5,7 +5,6 @@ import 'package:food_delivery/models/FireStore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-
 class CartPage extends StatefulWidget {
   @override
   _CartPageState createState() => _CartPageState();
@@ -14,7 +13,6 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   List<Map<String, dynamic>> _orders = [];
   FireStoreSend _fireStoreSend = FireStoreSend();
-
 
   Future<void> getFromCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -29,13 +27,13 @@ class _CartPageState extends State<CartPage> {
         .get();
 
     // Retrieve existing orders from shared preferences
-    List<String> orders =  [];
+    List<String> orders = [];
 
     // Process each document and add it to orders list
     querySnapshot.docs.forEach((doc) {
       // Create a new order as a JSON string
       String newOrder = jsonEncode({
-        'id':doc.id,
+        'id': doc.id,
         "imgURL": doc["imgURL"],
         "itemName": doc["itemName"],
         "numberOfItems": doc["numberOfItems"],
@@ -49,7 +47,7 @@ class _CartPageState extends State<CartPage> {
       return jsonDecode(order) as Map<String, dynamic>;
     }).toList();
     setState(() {
-    _orders = orderList;
+      _orders = orderList;
     });
     // Save the updated list back to shared preferences
   }
@@ -60,10 +58,8 @@ class _CartPageState extends State<CartPage> {
     getFromCart();
   }
 
-
-  void DoTheneededWork(String id) async{
+  void DoTheneededWork(String id) async {
     await _fireStoreSend.updateDeliveryStatus(id);
-
   }
 
   @override
@@ -73,6 +69,7 @@ class _CartPageState extends State<CartPage> {
         title: Text('Your Cart'),
       ),
       body:
+
         _orders.isEmpty
           ? const Center(child: Text('No items in your cart'))
           : ListView.builder(
@@ -105,53 +102,52 @@ class _CartPageState extends State<CartPage> {
                         onPressed: () =>
                             Navigator.of(context).pop(false),
                         child: const Text('CANCEL'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(true),
+                                  child: const Text('CONFIRM'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      onDismissed: (DismissDirection direction) {
+                        setState(() {
+                          DoTheneededWork(order['id']);
+                          _orders.removeAt(index);
+                        });
+
+                        // Show a snackbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                "Order ${order['itemName'] ?? "Null"} dismissed"),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: Colors.grey[300]!)),
+                          ),
+                          child: ListTile(
+                            title: Text(order['itemName'] ?? "Null Name" ?? ''),
+                            subtitle: Text(
+                                'Quantity: ${order['numberOfItems'] ?? "Null number"} - Price: ${order['price'] ?? "Null Price"}'),
+                            leading: Image.network(
+                                order['imgURL'] ?? 'Null Image',
+                                width: 50,
+                                height: 50,
+                                fit: BoxFit.cover),
+                          ),
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.of(context).pop(true),
-                        child: const Text('CONFIRM'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            onDismissed: (DismissDirection direction) {
-
-
-              setState(() {
-                DoTheneededWork(order['id']);
-                _orders.removeAt(index);
-
-              });
-
-              // Show a snackbar
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                      "Order ${order['itemName'] ?? "Null"} dismissed"),
+                    );
+                  },
                 ),
-              );
-            },
-            child: Card(
-              child: Container(
-                decoration: BoxDecoration(
-                  border:
-                  Border(bottom: BorderSide(color: Colors.grey[300]!)),
-                  
-                ),
-                child: ListTile(
-                  title: Text(order['itemName'] ?? "Null Name" ?? ''),
-                  subtitle: Text(
-                      'Quantity: ${order['numberOfItems'] ?? "Null number"} - Price: ${order['price'] ?? "Null Price"}'),
-                  leading: Image.network(order['imgURL'] ?? 'Null Image',
-                      width: 50, height: 50, fit: BoxFit.cover),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }

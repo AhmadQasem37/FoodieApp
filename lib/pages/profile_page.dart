@@ -28,7 +28,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _getAvatars() async {
     String avatarsString =
-    await DefaultAssetBundle.of(context).loadString("assets/Avatars.json");
+
+        await DefaultAssetBundle.of(context).loadString("assets/Avatars.json");
+
     dynamic avatars = json.decode(avatarsString);
     if (mounted) {
       setState(() {
@@ -41,8 +43,13 @@ class _ProfilePageState extends State<ProfilePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID') ?? '';
 
+
     DocumentSnapshot userDoc =
     await FirebaseFirestore.instance.collection("Users").doc(userID).get();
+
+
+
+
     setState(() {
       userData = userDoc.data() as Map<String, dynamic>?;
       _imgUrl = userData?["imgURL"] ?? _imgUrl;
@@ -196,68 +203,71 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   child: _isLoading
                       ? const Center(
+
                     child: SpinKitFadingCube(
                         color: Colors.white, size: 50.0),
                   )
+
                       : Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                style: BorderStyle.solid,
-                                color: Colors.white,
-                                width: 4,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      style: BorderStyle.solid,
+                                      color: Colors.white,
+                                      width: 4,
+                                    ),
+                                  ),
+                                  child: ClipOval(
+                                    child: Image.network(_imgUrl,
+                                        width: 80,
+                                        height: 80,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: -8,
+                                  right: -8,
+                                  child: IconButton(
+                                    onPressed: _showAvatarSelectionSheet,
+                                    icon:
+                                        const Icon(Icons.camera_alt, size: 30),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(
+                              width: width * 0.8,
+                              child: Text(
+                                userData?["full_name"] ?? '',
+                                style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            child: ClipOval(
-                              child: Image.network(_imgUrl,
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover),
+                            Center(
+                              child: SizedBox(
+                                width: width / 2,
+                                child: Text(
+                                  userData?["email"] ?? '',
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
-                          ),
-                          Positioned(
-                            top: -8,
-                            right: -8,
-                            child: IconButton(
-                              onPressed: _showAvatarSelectionSheet,
-                              icon:
-                              const Icon(Icons.camera_alt, size: 30),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: width * 0.8,
-                        child: Text(
-                          userData?["full_name"] ?? '',
-                          style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                          textAlign: TextAlign.center,
+                            const SizedBox(height: 20),
+                          ],
                         ),
-                      ),
-                      Center(
-                        child: SizedBox(
-                          width: width / 2,
-                          child: Text(
-                            userData?["email"] ?? '',
-                            style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
                 ),
               ],
             ),
@@ -266,6 +276,7 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
+
                   ProfileButton(
                       icon: Icons.layers_outlined,
                       onPressed: () {
@@ -330,6 +341,7 @@ class AvatarSelectionSheet extends StatelessWidget {
 
   const AvatarSelectionSheet(
       {super.key, required this.avatarsList, required this.onAvatarSelected});
+
 
   @override
   Widget build(BuildContext context) {
