@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/models/FireStore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBase {
   final _auth = FirebaseAuth.instance;
@@ -104,7 +105,11 @@ class AuthBase {
             );
           },
         );
-      } else {
+
+      }
+      else {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('userID', signUPCreateResult.user!.uid);
         Navigator.of(context).pushNamed("Home");
       }
     } on FirebaseAuthException catch (e) {

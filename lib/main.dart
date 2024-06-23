@@ -11,11 +11,17 @@ import 'package:food_delivery/pages/login.dart';
 // FireBase Packages
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:food_delivery/pages/notifications_page.dart';
 import 'package:food_delivery/pages/onbording.dart';
+import 'package:food_delivery/pages/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
-void main() async {
+final navigationKey = GlobalKey<NavigatorState>();
+
+void main() async{
+
+
   // This Line From  the youtube Video
   //https://youtu.be/ybgOIwf4dZU?si=I8u-Yx9a2J_7ypPC
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,16 +80,22 @@ class _MyAppState extends State<MyApp> {
                 borderSide: const BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
-            )),
-        home: !isFiresTimeOpen ? const SplashScreen() : const Onbording(),
-        routes: <String, WidgetBuilder>{
-          "IntroScreen": (BuildContext ctx) => const IntroScreen(),
-          "LoginScreen": (BuildContext ctx) => const LoginPage(AuthType1.login),
-          "SignUpScreen": (BuildContext ctx) =>
-              const LoginPage(AuthType1.signup),
-          "Home": (BuildContext ctx) => const CustomBottomNavbar(),
-          "ForgetPassword": (BuildContext ctx) => const ForgetPassword(),
-          "OrdersScreen": (BuildContext ctx) => const AllOrders(),
-        });
+
+            )
+        ),
+        home: !isFiresTimeOpen ?  const SplashScreen(): const Onbording(),
+        navigatorKey: navigationKey,
+        routes:<String, WidgetBuilder>{
+          "IntroScreen":(BuildContext ctx)=> const IntroScreen(),
+          "LoginScreen": (BuildContext ctx)=> const  LoginPage(AuthType1.login),
+          "SignUpScreen": (BuildContext ctx) => const LoginPage(AuthType1.signup),
+          "Home" : (BuildContext ctx) => const CustomBottomNavbar(),
+          "ForgetPassword" : (BuildContext ctx) => const ForgetPassword(),
+          "OrdersScreen" : (BuildContext ctx) => const AllOrders(),
+          "/NotificationPage" : (context) =>   NotificationsPage(),
+          "ProfilePage" : (BuildContext ctx) =>  ProfilePage(),
+        }
+    );
+
   }
 }
