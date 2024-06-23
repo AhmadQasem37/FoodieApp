@@ -105,6 +105,7 @@ class AuthBase {
             );
           },
         );
+
       }
       else {
         SharedPreferences prefs = await SharedPreferences.getInstance();

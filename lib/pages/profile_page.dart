@@ -42,7 +42,6 @@ class _ProfilePageState extends State<ProfilePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID') ?? '';
 
-
     DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection("Users").doc(userID).get();
 
     setState(() {
@@ -190,6 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _authBase.signOut();
                     Navigator.of(context).pushReplacementNamed("LoginScreen");
                   }, text: "Logout"),
+
                 ],
               ),
             ),
@@ -214,7 +214,6 @@ class _ProfilePageState extends State<ProfilePage> {
 class AvatarSelectionSheet extends StatelessWidget {
   final List<dynamic> avatarsList;
   final Function(String) onAvatarSelected;
-
 
   const AvatarSelectionSheet({super.key, required this.avatarsList, required this.onAvatarSelected});
 

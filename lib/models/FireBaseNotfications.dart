@@ -27,6 +27,18 @@ class FireBaseMsg {
     // navigate to notification page and show the notifications
     // Navigator.of(context).pushReplacementNamed("NotificationPage");
     navigationKey.currentState?.pushNamed("/NotificationPage", arguments:msg );
+
+  }
+
+  // Function to initialize background settings
+  Future initPushNotifications() async {
+    // handle notification if the app terminated and now opened
+    FirebaseMessaging.instance.getInitialMessage().then(handelMsg);
+
+    // attach event listeners for when a notification opens the app
+
+    FirebaseMessaging.onMessageOpenedApp.listen((handelMsg));
+
   }
 
   // Function to initialize background settings

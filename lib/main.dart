@@ -17,10 +17,10 @@ import 'package:food_delivery/pages/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
-
 final navigationKey = GlobalKey<NavigatorState>();
 
-void main() async {
+void main() async{
+
   // This Line From  the youtube Video
   //https://youtu.be/ybgOIwf4dZU?si=I8u-Yx9a2J_7ypPC
   WidgetsFlutterBinding.ensureInitialized();
