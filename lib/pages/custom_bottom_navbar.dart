@@ -19,42 +19,44 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
     });
   }
 
-  List<Widget> widgetBuilder =  [
-   const HomePage(),
+  List<Widget> widgetBuilder = [
+    const HomePage(),
     const FavoritesPage(),
-     CartPage(),
+    CartPage(),
     ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-
       backgroundColor: Colors.grey[100],
       body: widgetBuilder[selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.add_shopping_cart_outlined),
-              label: "Cart"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        onTap: onItemTapped,
-      ),
+      bottomNavigationBar: size.width > 800
+          ? null
+          : BottomNavigationBar(
+              currentIndex: selectedIndex,
+              backgroundColor: Colors.white,
+              selectedItemColor: Colors.orange,
+              unselectedItemColor: Colors.black,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite_border),
+                  label: 'Favorites',
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.add_shopping_cart_outlined),
+                    label: "Cart"),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: 'Profile',
+                ),
+              ],
+              onTap: onItemTapped,
+            ),
     );
   }
 }

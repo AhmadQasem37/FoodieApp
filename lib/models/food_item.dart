@@ -16,17 +16,17 @@ class FoodItem {
       this.sales = 0,
       this.time = '2024',
       this.isFavorit = false});
-      FoodItem copywith(bool? isFavorit) {
-        return FoodItem(
-            id: id,
-            category: category ,
-            name: name,
-            imgUrl: imgUrl,
-            price: price,
-            sales: sales,
-            time: time,
-            isFavorit: isFavorit ?? this.isFavorit);
-      }
+  FoodItem copywith(bool? isFavorit) {
+    return FoodItem(
+        id: id,
+        category: category,
+        name: name,
+        imgUrl: imgUrl,
+        price: price,
+        sales: sales,
+        time: time,
+        isFavorit: isFavorit ?? this.isFavorit);
+  }
 }
 
 List<FoodItem> food = [

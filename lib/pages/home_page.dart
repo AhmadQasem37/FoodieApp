@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     debugPrint('i am in the build now!');
-    // List<Map<String, dynamic>> products = [
+    final size =
+        MediaQuery.of(context).size; // List<Map<String, dynamic>> products = [
     //   {
     //     'name': 'Beef Burger',
     //     'category': 'Burger',
@@ -93,9 +94,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -146,7 +145,8 @@ class _HomePageState extends State<HomePage> {
                 child: Image.network(
                   'https://img.freepik.com/free-psd/delicious-burger-food-menu-facebook-cover-template_106176-756.jpg',
                   fit: BoxFit.fill,
-                  height: 200,
+                  height:
+                      size.width > 800 ? size.height * 45 : size.height * 0.25,
                 ),
               ),
               const SizedBox(
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                 height: 32.0,
               ),
               SizedBox(
-                height: 120,
+                height: size.height * 0.15,
                 child: ListView.builder(
                   itemCount: categories.length,
                   scrollDirection: Axis.horizontal,
@@ -190,10 +190,10 @@ class _HomePageState extends State<HomePage> {
                         });
                         if (selectedCategoryIndex != null) {
                           final selectedCategory =
-                          categories[selectedCategoryIndex!];
+                              categories[selectedCategoryIndex!];
                           filteredFood = food
                               .where((element) =>
-                          element.category == selectedCategory.name)
+                                  element.category == selectedCategory.name)
                               .toList();
                         }
                       },
@@ -242,80 +242,89 @@ class _HomePageState extends State<HomePage> {
               //   padding: const EdgeInsetsDirectional.all(8.0),
               //   child:
               GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: size.width > 1100
+                        ? 5
+                        : size.width > 800
+                            ? 4
+                            : 2,
                     mainAxisSpacing: 18,
                     crossAxisSpacing: 18),
                 itemCount: filteredFood.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetailsPage(foodItem: filteredFood[index])));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.0)),
-                    child: Stack(
-                      alignment: AlignmentDirectional.center,
-                      children: [
-                        Column(
-                          children: [
-                            Image.network(
-                              filteredFood[index].imgUrl,
-                              height: 100,
-                              width: 100,
-                            ),
-                            Text(
-                              filteredFood[index].name,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              filteredFood[index].category,
-                              style: const TextStyle(
-                                color: Colors.grey,
+                itemBuilder: (context, index) =>
+                    LayoutBuilder(builder: (context, constrains) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProductDetailsPage(
+                              foodItem: filteredFood[index])));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.0)),
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Column(
+                            children: [
+                              Image.network(
+                                filteredFood[index].imgUrl,
+                                height: constrains.maxHeight * 0.45,
+                                width: 100,
                               ),
-                            ),
-                            Text(
-                              '\$ ${filteredFood[index].price}',
-                              style: const TextStyle(
+                              Text(
+                                filteredFood[index].name,
+                                style: TextStyle(
+                                    fontSize: constrains.maxHeight * 0.09,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                filteredFood[index].category,
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                '\$ ${filteredFood[index].price}',
+                                style: TextStyle(
+                                    color: Colors.deepOrange,
+                                    fontSize: constrains.maxHeight * 0.09,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          PositionedDirectional(
+                            top: 0,
+                            end: 0,
+                            child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    // filteredFood[index].isFavorit =
+                                    //     !filteredFood[index].isFavorit;
+                                    final selectedFoodItemIndex =
+                                        food.indexOf(filteredFood[index]);
+                                    filteredFood[index] = filteredFood[index]
+                                        .copywith(
+                                            !filteredFood[index].isFavorit);
+                                    food[selectedFoodItemIndex] =
+                                        filteredFood[index];
+                                  });
+                                },
+                                icon: Icon(
+                                  filteredFood[index].isFavorit == false
+                                      ? Icons.favorite_border
+                                      : Icons.favorite,
                                   color: Colors.deepOrange,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                        PositionedDirectional(
-                          top: 0,
-                          end: 0,
-                          child: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  // filteredFood[index].isFavorit =
-                                  //     !filteredFood[index].isFavorit;
-                                  final selectedFoodItemIndex =
-                                  food.indexOf(filteredFood[index]);
-                                  filteredFood[index] = filteredFood[index]
-                                      .copywith(!filteredFood[index].isFavorit);
-                                  food[selectedFoodItemIndex] =
-                                  filteredFood[index];
-                                });
-                              },
-                              icon: Icon(
-                                filteredFood[index].isFavorit == false
-                                    ? Icons.favorite_border
-                                    : Icons.favorite,
-                                color: Colors.deepOrange,
-                              )),
-                        )
-                      ],
+                                )),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
               // GridView(
               //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

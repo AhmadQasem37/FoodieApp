@@ -14,8 +14,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   var email = "";
   final _emailController = TextEditingController();
 
-  resetPassword() async{
-    try{
+  resetPassword() async {
+    try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: Colors.orange,
@@ -29,7 +29,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       ));
 
       Navigator.of(context).pushNamed("LoginScreen");
-    }on FirebaseException catch(e){
+    } on FirebaseException catch (e) {
       if (e.code == "user-not-found") {
         print("No User Found");
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -43,17 +43,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           ),
         ));
       }
-
-
     }
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _emailController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +94,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 20),
                     child: MainButton("Send Email", () {
-                      if(_formKey.currentState!.validate()){
+                      if (_formKey.currentState!.validate()) {
                         setState(() {
-                          email  = _emailController.text;
+                          email = _emailController.text;
                           resetPassword();
                         });
                       }
-
                     }),
                   )
                 ],
