@@ -92,7 +92,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             "Notifications",
             style: TextStyle(color: Colors.white, fontSize: 30),
           ),
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.deepOrange,
           automaticallyImplyLeading: fromProfile,
 
         ),
@@ -135,7 +135,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           onPressed: () async {
             Navigator.of(context).pushReplacementNamed("Home");
           },
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.deepOrange,
           child: const Text(
             "Home",
             style: TextStyle(color: Colors.white),

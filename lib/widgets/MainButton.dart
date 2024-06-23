@@ -14,7 +14,7 @@ class MainButton extends StatelessWidget {
       width: width - 20,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange,
+              backgroundColor: Colors.deepOrange,
               elevation: 7,
               shape: ContinuousRectangleBorder(
                   borderRadius: BorderRadius.circular(30))),
